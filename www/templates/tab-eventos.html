@@ -1,0 +1,24 @@
+<ion-view view-title="Eventos">
+	
+	<div class="bar bar-energized bar-subheader item-input-inset">
+  		<label class="item-input-wrapper">
+    		<i class="icon ion-ios-search placeholder-icon"></i>
+    		<input type="search" placeholder="Search" ng-model="busca">
+  		</label>
+	</div>
+
+
+
+	<ion-content class="padding" ng-controller="EventosCtrl">
+	<br/><br/>
+		<ion-list  >
+			<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in eventos | filter: busca"	href="#/tab/eventos/{{item.id}}"
+					can-swipe="true">
+				<img ng-src="{{item.foto}}">
+				<h2>{{item.nome}}</h2>
+				<h3>{{item.data}}</h3>
+				<ion-option-button class="assertive-bg" ng-click="excluir($index)">Excluir</ion-option-button>	
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
