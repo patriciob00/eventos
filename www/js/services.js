@@ -1,27 +1,21 @@
 angular.module('eventos.services', [])
 
-.factory('eventoService' , function() {
+.factory('eventoService' , function($http) {
 //POde se usar uma fonte aqui que retorne um array JSON
 
 //Dados falsos para teste 
-	var eventos = JSON.parse(localStorage.eventos || "[]");
+	var apiUrl = "http://localhost:8080/api/eventos/" 
 
-function getNovoId() {
-	return eventos.length ? eventos[eventos.length-1].id + 1 : 0;
-}
 
 	return {
 	  todos: function() {
-	  	return eventos;
+	  	return $http.get(apiUrl);
 	  },
-	  excluir: function(eventoIndex) {
-	  		eventos.splice(eventoIndex, 1);
-	  		localStorage.eventos = JSON.stringify(eventos);
+	  excluir: function(eventoID) {
+	  	return $http.delete(apiUrl + eventoID + "/");	
 	  },
 	  salvar: function(evento) {
-	  	evento.id = getNovoId();
 	  	eventos.push({
-	  		id: evento.id,
 	  		nome: evento.nome,
 	  		data: evento.data,
 	  		local: evento.local,
