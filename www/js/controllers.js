@@ -1,8 +1,10 @@
 angular.module('eventos.controllers', [])
 
 	.controller('EventosCtrl', function($scope ,eventoService) {
-		
-		getTodos();
+
+		$scope.$on("$ionicView.beforeEnter", function() {
+			getTodos()
+		});
 
 		function getTodos() {
 				eventoService.todos()
@@ -25,12 +27,36 @@ angular.module('eventos.controllers', [])
 				};
 			})
 
-			.controller( 'NovoEventoCtrl' , function($scope , eventoService ) {
+			.controller( 'NovoEventoCtrl' , function($scope , eventoService , $state ) {
+
 				$scope.salvar = function(evento) {
-					eventoService.salvar(evento);
-				};
+					newEvent = angular.extend({},evento);
+					var y = newEvent.data.getFullYear(),
+					m = newEvent.data.getMonth(),
+					d = newEvent.data.getDay();
+					newEvent.data = y+"-"+m+"-"+d;
+				  	eventoService.salvar(newEvent).then(
+					 	function(response) {
+					 	 	alert("Evento criado com sucesso");
+					 	 	$state.go('tab.eventos')
+					 	},
+					 	function( response) {
+							alert('Erro: ' + response)
+					 	}
+				 	);
+			    }
 			})
 
 			.controller( 'EventoDetalheCtrl' , function( $scope ,$stateParams, eventoService ) {
-				$scope.evento = eventoService.get($stateParams.eventoID);
+				 eventoService.get($stateParams.eventoID)
+				 	.success(function (response){
+				 		$scope.evento = response;
+				 })
+				 .error(function (error){
+				 	alert('Erro: '+ response)
+				 });
+			})
+
+			.controller( 'LoginCtrl' , function() {
+	
 			});

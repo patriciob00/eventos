@@ -1,7 +1,7 @@
 angular.module('eventos.services', [])
 
 .factory('eventoService' , function($http) {
-//POde se usar uma fonte aqui que retorne um array JSON
+//Pode se usar uma fonte aqui que retorne um array JSON
 
 //Dados falsos para teste 
 	var apiUrl = "http://localhost:8080/api/eventos/" 
@@ -12,25 +12,22 @@ angular.module('eventos.services', [])
 	  	return $http.get(apiUrl);
 	  },
 	  excluir: function(eventoID) {
+	evento = $http.get()
 	  	return $http.delete(apiUrl + eventoID + "/");	
 	  },
 	  salvar: function(evento) {
-	  	eventos.push({
-	  		nome: evento.nome,
-	  		data: evento.data,
-	  		local: evento.local,
-	  		descricao: evento.descricao,
-	  		foto: evento.foto
-	  	});
-	  	localStorage.eventos = JSON.stringify(eventos);		
+	  	return $http.post(apiUrl, evento);
 	  },
 	  get: function(eventoID) {
-	  	for (var i = 0; i < eventos.length ; i++) {
+	  	/**for (var i = 0; i < eventos.length ; i++) {
 	  		if (eventos[i].id == parseInt(eventoID)) {
 	  			return eventos[i];
 	  		  }
 	  	    }
 	  	    return null
 	   }
-	};
-});
+	};**/
+			 return $http.get(apiUrl + eventoID + "/")
+			
+		},
+}})	;

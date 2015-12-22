@@ -41,6 +41,15 @@
     })
 
   //Cada tab tem sua propria nav history pilha:
+   .state('tab.login',{
+    url: '/login',
+    views: {
+     'evento-login': {
+       templateUrl: 'templates/evento-login.html',
+       controller: 'LoginCtrl'
+      }
+    }
+  })
 
   .state('tab.eventos',{
     url: '/eventos',
